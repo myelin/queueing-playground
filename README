@@ -1,0 +1,22 @@
+queueing-playground
+===================
+  Phillip Pearson <pp@myelin.co.nz>
+  http://github.com/myelin/queueing-playground
+
+Here's some code I've been using to benchmark RabbitMQ recently.
+
+Usage
+=====
+
+Create a config.txt file, like this, in the same directory as this README:
+
+  host = hostname of your rabbitmq server
+  user = your rabbitmq username
+  password = your rabbitmq password
+
+Then try running some of the Python scripts.
+
+Blog posts
+==========
+
+Initial queueing experiments: http://www.myelin.co.nz/post/2008/8/4/#200808042
