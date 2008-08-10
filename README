@@ -3,7 +3,14 @@ queueing-playground
   Phillip Pearson <pp@myelin.co.nz>
   http://github.com/myelin/queueing-playground
 
-Here's some code I've been using to benchmark RabbitMQ recently.
+Here's some code I've been using to experiment with RabbitMQ recently.
+
+Dependencies
+============
+
+py-amqplib: http://barryp.org/software/py-amqplib/
+
+QPid: http://cwiki.apache.org/qpid/
 
 Usage
 =====
@@ -19,11 +26,40 @@ Create a config.txt file, like this, in the same directory as this README:
   durable = true
   ssl = false
 
-Then try running some of the Python scripts.
+Then try running some of the Python scripts in python/qpid and
+python/amqplib.
 
-Change the 'durable' line to 'durable = 0'
+Try changing the 'durable' line to 'durable = true' (and changing the
+'exchange' and 'queue' values to something like 'durexch' and
+'durqueue', as Rabbit won't let you redeclare the existing exchange as
+non-durable) to get a durable queue.
+
+Results
+=======
+
+colinux VM using one core of a Mobile Core 2 Duo:
+
+  py-amqplib 0.3
+
+    producer and Rabbit on same VM, non-durable queue: ~1200-1300
+    msgs/sec produced.
+
+    basic.consume consumer and Rabbit on same VM, non-durable queue:
+    ~150-180 msgs/sec consumed.
+
+    producer, basic.consume consumer and Rabbit on same VM,
+    non-durable queue: ~1000 msgs/sec produced, ~50 msgs/sec consumed.
+
+  QPid 1.0 M2
+
+    Couldn't get basic.consume working.  basic.get consumer consumes
+    about 25 msgs/sec but without using much CPU, so I could run 20 at
+    a time plus the py-amqplib producer (above) to produce and consume
+    about 300 msgs/sec continuously.
 
 Blog posts
 ==========
 
 Initial queueing experiments: http://www.myelin.co.nz/post/2008/8/4/#200808042
+
+Queueing update: http://www.myelin.co.nz/post/2008/8/10/#200808101
