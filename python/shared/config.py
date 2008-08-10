@@ -14,6 +14,9 @@ class Config:
         for line in open(fn).readlines():
             p = line.find("#")
             if p != -1: line = line[:p]
+            line = line.strip()
+            if not line: continue
+            
             k, v = [_.strip() for _ in line.split("=", 2)]
             typ = Config.TYPES.get(k)
             if typ == 'int':
