@@ -1,8 +1,9 @@
-import qpid, time, sys, os.path
+import time, sys, os.path
 HERE = os.path.split(sys.argv[0])[0]
 sys.path.insert(0, os.path.join(HERE, '..', 'shared'))
 import config
 conf = config.Config()
+import qpid
 
 conn = qpid.client.Client(conf.host, conf.port, qpid.spec.load(os.path.join(HERE, 'amqp.0-8.xml')), vhost='/')
 print conn.start({"LOGIN": conf.user, "PASSWORD": conf.password})

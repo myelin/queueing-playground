@@ -5,6 +5,7 @@ class Config:
     TYPES = {
         'port': 'int',
         'durable': 'bool',
+        'ssl': 'bool',
         }
     
     def __init__(self):

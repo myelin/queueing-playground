@@ -16,7 +16,8 @@ Create a config.txt file, like this, in the same directory as this README:
   password = your rabbitmq password
   exchange = tempexch
   queue = tempqueue
-  durable = 1
+  durable = true
+  ssl = false
 
 Then try running some of the Python scripts.
 
