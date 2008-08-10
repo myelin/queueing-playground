@@ -37,7 +37,8 @@ non-durable) to get a durable queue.
 Results
 =======
 
-colinux VM using one core of a Mobile Core 2 Duo:
+colinux VM using one core of a Mobile Core 2 Duo, running running
+Debian Etch, RabbitMQ 1.4.0-1 and Erlang 11.b.2-4:
 
   py-amqplib 0.3
 
