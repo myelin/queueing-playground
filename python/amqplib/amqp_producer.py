@@ -10,6 +10,7 @@ def main():
         n = total = 0
         seq = 0
 
+        #msg = amqp.Message("*" * (5*1024), content_type='text/plain')
         while 1:
             # in batches of 1000
             N = 1000
