@@ -37,8 +37,8 @@ non-durable) to get a durable queue.
 Results
 =======
 
-colinux VM using one core of a Mobile Core 2 Duo, running running
-Debian Etch, RabbitMQ 1.4.0-1 and Erlang 11.b.2-4:
+colinux VM using one core of a Mobile Core 2 Duo, running Debian Etch,
+RabbitMQ 1.4.0-1 and Erlang 11.b.2-4:
 
   py-amqplib 0.3
 
@@ -57,6 +57,32 @@ Debian Etch, RabbitMQ 1.4.0-1 and Erlang 11.b.2-4:
     about 25 msgs/sec but without using much CPU, so I could run 20 at
     a time plus the py-amqplib producer (above) to produce and consume
     about 300 msgs/sec continuously.
+
+Athlon XP 2800+ with 1G RAM, running Debian Etch, RabbitMQ 1.4.0-1 and
+Erlang 1:12.b.3-dfsg-4:
+
+  py-amqplib 0.5
+
+    producer and Rabbit on same box, non-durable queue: 2000-3000
+    msgs/sec produced (initially ~3000, dropping to ~2000 after the
+    number of messages in the queue gets up around 20k).
+
+    basic.consume consumer and Rabbit on same box: ~2100 msgs/sec
+    consumed.
+
+    producer, one basic.consume consumer and Rabbit on same box,
+    non-durable queue:
+
+      one run: ~1400 msgs/sec produced, 900-1000 msgs/sec consumed.
+
+      another run: ~900 msgs/sec produced, ~700 msgs/sec consumed.
+
+      No idea what is causing this difference.
+
+    producer, two basic.consume consumers and Rabbit on same box,
+    non-durable queue: ~650 msgs/sec produced and consumed.
+
+    basic.get consumers manage 25 msgs/sec each, using nearly no CPU.
 
 Blog posts
 ==========

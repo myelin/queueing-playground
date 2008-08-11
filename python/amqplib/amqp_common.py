@@ -14,5 +14,6 @@ def setup_amqp(mode='r'):
     ch.exchange_declare(conf.exchange, 'direct', durable=conf.durable, auto_delete=False)
     qname, n_msgs, n_consumers = ch.queue_declare(conf.queue, durable=conf.durable, exclusive=False, auto_delete=False)
     print "queue %s (%d msgs, %d consumers)" % (qname, n_msgs, n_consumers)
+    ch.queue_bind(conf.queue, conf.exchange, conf.queue)
 
     return ch

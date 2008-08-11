@@ -7,13 +7,11 @@ class Main:
     def main(self):
         print "py-amqplib consumer"
         self.ch = setup_amqp('r')
-        self.ch.queue_bind(conf.queue, conf.exchange, conf.queue)
 
         #self.poll_forever()
         self.consume_forever()
 
         self.ch.close()
-        conn.close()
 
     def callback(self, msg):
         #print msg.body,

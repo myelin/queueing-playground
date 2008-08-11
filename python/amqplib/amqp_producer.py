@@ -5,20 +5,31 @@ from amqp_common import amqp, conf, setup_amqp
 
 def main():
     ch = setup_amqp('w')
-    start = time.time()
+    start = last = now = time.time()
     try:
-        last = int(time.time())
         n = total = 0
         seq = 0
+
         while 1:
-            for n in range(1000):
+            # in batches of 1000
+            N = 1000
+            for n in range(N):
                 msg = amqp.Message("#%d" % seq, content_type='text/plain')
                 ch.basic_publish(msg, conf.exchange, conf.queue)
                 seq += 1
-            print seq, seq/(time.time()-start)
-            continue
+            now = time.time()
+            print "%d in %.2f (last is %d) is %.2f/sec.  Overall %.2f/sec." % (
+                N, now-last, seq, float(N)/(now-last), seq/(now-start),
+                )
+            last = now
+
+        last = int(time.time())
+        while 0:
+            # one at a time
             n += 1
             seq += 1
+            msg = amqp.Message("#%d" % seq, content_type='text/plain')
+            ch.basic_publish(msg, conf.exchange, conf.queue)
             now = int(time.time())
             if now != last:
                 print seq, n, seq/(time.time()-start)
@@ -26,10 +37,9 @@ def main():
                 n = 0
                 last = now
     except KeyboardInterrupt:
-        print "total",total + n
+        print "total %d" % (total + n)
 
     ch.close()
-    conn.close()
 
 if __name__ == '__main__':
     main()
